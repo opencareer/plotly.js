@@ -356,7 +356,7 @@ module.exports = function style(s, gd, legend) {
             .selectAll('path.legend' + desiredType)
             .data(isVisible ? [d] : []);
         barpath.enter().append('path').classed('legend' + desiredType, true)
-            .attr('d', 'M6,6H-6V-6H6Z')
+            .attr('d', 'M6,0A6,6 0 1,1 0,-6A6,6 0 0,1 6,0Z')
             .attr('transform', centerTransform);
         barpath.exit().remove();
 
