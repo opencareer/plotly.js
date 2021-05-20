@@ -1599,7 +1599,7 @@ plots.plotAutoSize = function plotAutoSize(gd, layout, fullLayout) {
 
         // somehow we get a few extra px height sometimes...
         // just hide it
-        document.body.style.overflow = 'hidden';
+        document.body.style.overflow = 'visible';
     } else {
         // plotly.js - let the developers do what they want, either
         // provide height and width for the container div,
