@@ -134,7 +134,19 @@ module.exports = function draw(gd, opts) {
             var gs = fullLayout._size;
             var bw = opts.borderwidth;
 
-            var lx = gs.l + gs.w * opts.x - FROM_TL[getXanchor(opts)] * opts._width;
+            var xanchor = getXanchor(opts);
+            var yanchor = getYanchor(opts);
+            // Adjust centering of the legend box
+            var lx;
+            if (xanchor === 'center' && yanchor === 'top') {
+                lx = (gs.w * opts.x - 0.5 * opts._width) * 1.8;
+            } else if (xanchor === 'center' && yanchor === 'bottom') {
+                lx = (gs.l + gs.w * opts.x - FROM_TL[getXanchor(opts)] * opts._width)-30;
+            } else if (xanchor === 'center' && yanchor === 'middle') {
+                lx = (gs.l + gs.w * opts.x - FROM_TL[getXanchor(opts)] * opts._width)-15;
+            } else {
+                lx = gs.l + gs.w * opts.x - FROM_TL[getXanchor(opts)] * opts._width;
+            }
             var ly = gs.t + gs.h * (1 - opts.y) - FROM_TL[getYanchor(opts)] * opts._effHeight;
 
             if(opts._main && fullLayout.margin.autoexpand) {
@@ -640,6 +652,7 @@ function computeLegendDimensions(gd, groups, traces, opts) {
         }
     } else {
         var xanchor = getXanchor(opts);
+        var isCenterOfPlotArea = (xanchor === 'center');
         var isLeftOfPlotArea = opts.x < 0 || (opts.x === 0 && xanchor === 'right');
         var isRightOfPlotArea = opts.x > 1 || (opts.x === 1 && xanchor === 'left');
         var isBeyondPlotAreaY = isAbovePlotArea || isBelowPlotArea;
@@ -649,6 +662,7 @@ function computeLegendDimensions(gd, groups, traces, opts) {
         // - else if below/above plot area and anchored in the margin, extend to opposite margin,
         // - otherwise give it the maximum potential margin-push value
         opts._maxWidth = Math.max(
+            isCenterOfPlotArea ? fullLayout.width :
             isLeftOfPlotArea ? ((isBeyondPlotAreaY && xanchor === 'left') ? gs.l + gs.w : hw) :
             isRightOfPlotArea ? ((isBeyondPlotAreaY && xanchor === 'right') ? gs.r + gs.w : hw) :
             gs.w,
@@ -668,6 +682,7 @@ function computeLegendDimensions(gd, groups, traces, opts) {
             var maxGroupHeightInRow = 0;
             var groupOffsetX = 0;
             var groupOffsetY = 0;
+            var next = 0;
             groups.each(function() {
                 var maxWidthInGroup = 0;
                 var offsetY = 0;
@@ -682,7 +697,13 @@ function computeLegendDimensions(gd, groups, traces, opts) {
                 });
                 maxGroupHeightInRow = Math.max(maxGroupHeightInRow, offsetY);
 
-                var next = maxWidthInGroup + itemGap;
+                if (yanchor === 'top') {
+                    next = fullLayout.width / 3.99;
+                } else if (yanchor === 'bottom') {
+                    next = maxWidthInGroup + itemGap;
+                } else {
+                    next = maxWidthInGroup + itemGap;
+                }
 
                 if((next + bw + groupOffsetX) > opts._maxWidth) {
                     maxRowWidth = Math.max(maxRowWidth, groupOffsetX);

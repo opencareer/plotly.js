@@ -18,5 +18,5 @@ module.exports = {
     // number of px between legend title and (left) side of legend (always in x direction and from inner border)
     titlePad: 2,
     // number of px between each legend item (x and/or y direction)
-    itemGap: 5
+    itemGap: 1
 };
