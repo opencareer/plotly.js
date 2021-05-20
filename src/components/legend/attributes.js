@@ -74,7 +74,7 @@ module.exports = {
     tracegroupgap: {
         valType: 'number',
         min: 0,
-        dflt: 10,
+        dflt: 0,
         role: 'style',
         editType: 'legend',
         description: [
