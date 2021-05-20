@@ -405,64 +405,67 @@ exports.drawMainTitle = function(gd) {
     var fullLayout = gd._fullLayout;
 
     var textAnchor = getMainTitleTextAnchor(fullLayout);
-    var dy = getMainTitleDy(fullLayout);
+    // var dy = getMainTitleDy(fullLayout);
 
     Titles.draw(gd, 'gtitle', {
         propContainer: fullLayout,
         propName: 'title.text',
         placeholder: fullLayout._dfltTitle.plot,
         attributes: {
-            x: getMainTitleX(fullLayout, textAnchor),
-            y: getMainTitleY(fullLayout, dy),
+            // x: getMainTitleX(fullLayout, textAnchor),
+            x: 0,
+            // y: getMainTitleY(fullLayout, dy),
+            y: 15,
             'text-anchor': textAnchor,
-            dy: dy
+            // dy: dy
+            dy: 0
         }
     });
 };
 
-function getMainTitleX(fullLayout, textAnchor) {
-    var title = fullLayout.title;
-    var gs = fullLayout._size;
-    var hPadShift = 0;
+// function getMainTitleX(fullLayout, textAnchor) {
+//     var title = fullLayout.title;
+//     var gs = fullLayout._size;
+//     var hPadShift = 0;
 
-    if(textAnchor === SVG_TEXT_ANCHOR_START) {
-        hPadShift = title.pad.l;
-    } else if(textAnchor === SVG_TEXT_ANCHOR_END) {
-        hPadShift = -title.pad.r;
-    }
+//     if(textAnchor === SVG_TEXT_ANCHOR_START) {
+//         hPadShift = title.pad.l;
+//     } else if(textAnchor === SVG_TEXT_ANCHOR_END) {
+//         hPadShift = -title.pad.r;
+//     }
 
-    switch(title.xref) {
-        case 'paper':
-            return gs.l + gs.w * title.x + hPadShift;
-        case 'container':
-        default:
-            return fullLayout.width * title.x + hPadShift;
-    }
-}
+//     switch(title.xref) {
+//         case 'paper':
+//             return gs.l + gs.w * title.x + hPadShift;
+//         case 'container':
+//         default:
+//             return fullLayout.width * title.x + hPadShift;
+//     }
+// }
 
-function getMainTitleY(fullLayout, dy) {
-    var title = fullLayout.title;
-    var gs = fullLayout._size;
-    var vPadShift = 0;
+// function getMainTitleY(fullLayout, dy) {
+//     var title = fullLayout.title;
+//     var gs = fullLayout._size;
+//     var vPadShift = 0;
 
-    if(dy === '0em' || !dy) {
-        vPadShift = -title.pad.b;
-    } else if(dy === alignmentConstants.CAP_SHIFT + 'em') {
-        vPadShift = title.pad.t;
-    }
+//     if(dy === '0em' || !dy) {
+//         vPadShift = -title.pad.b;
+//     } else if(dy === alignmentConstants.CAP_SHIFT + 'em') {
+//         vPadShift = title.pad.t;
+//     }
 
-    if(title.y === 'auto') {
-        return gs.t / 2;
-    } else {
-        switch(title.yref) {
-            case 'paper':
-                return gs.t + gs.h - gs.h * title.y + vPadShift;
-            case 'container':
-            default:
-                return fullLayout.height - fullLayout.height * title.y + vPadShift;
-        }
-    }
-}
+//     if(title.y === 'auto') {
+//         return gs.t / 2;
+//     } else {
+//         switch(title.yref) {
+//             case 'paper':
+//                 return gs.t + gs.h - gs.h * title.y + vPadShift;
+//             case 'container':
+//             default:
+//                 return fullLayout.height - fullLayout.height * title.y + vPadShift;
+//         }
+//     }
+// }
 
 function getMainTitleTextAnchor(fullLayout) {
     var title = fullLayout.title;
