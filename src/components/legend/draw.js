@@ -138,15 +138,17 @@ module.exports = function draw(gd, opts) {
             var yanchor = getYanchor(opts);
             // Adjust centering of the legend box
             var lx;
+            var fullPlotWidth = gs.l + gs.w;
             if (xanchor === 'center' && yanchor === 'top') {
-                lx = (gs.w * opts.x - 0.5 * opts._width) * 1.8;
+                lx = ((fullPlotWidth * 0.5) - (opts._width * 0.5)) + ((fullPlotWidth-opts._width) / 3.99)-20;
             } else if (xanchor === 'center' && yanchor === 'bottom') {
-                lx = (gs.l + gs.w * opts.x - FROM_TL[getXanchor(opts)] * opts._width)-30;
+                lx = ((fullPlotWidth * 0.5) - (opts._width * 0.5))-5;
             } else if (xanchor === 'center' && yanchor === 'middle') {
-                lx = (gs.l + gs.w * opts.x - FROM_TL[getXanchor(opts)] * opts._width)-15;
+                lx = ((fullPlotWidth * 0.5) - (opts._width * 0.5));
             } else {
-                lx = gs.l + gs.w * opts.x - FROM_TL[getXanchor(opts)] * opts._width;
+                lx = fullPlotWidth * opts.x - FROM_TL[getXanchor(opts)] * opts._width;
             }
+
             var ly = gs.t + gs.h * (1 - opts.y) - FROM_TL[getYanchor(opts)] * opts._effHeight;
 
             if(opts._main && fullLayout.margin.autoexpand) {
