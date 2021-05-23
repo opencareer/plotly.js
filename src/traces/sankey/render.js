@@ -924,7 +924,9 @@ module.exports = function(gd, svg, calcData, layout, callbacks) {
             switch(d.arrangement) {
                 case 'fixed': return 'default';
                 case 'perpendicular': return 'ns-resize';
-                default: return 'move';
+                // default: return 'move';
+                // change cursor to default instead of drag 'move' cursor
+                default: return 'default';
             }
         });
 
@@ -943,8 +945,9 @@ module.exports = function(gd, svg, calcData, layout, callbacks) {
         .style('opacity', function(n) { return ((gd._context.staticPlot || firstRender) && !n.partOfGroup) ? 1 : 0;});
 
     sankeyNode
-        .call(attachPointerEvents, sankey, callbacks.nodeEvents)
-        .call(attachDragHandler, sankeyLink, callbacks, gd); // has to be here as it binds sankeyLink
+        .call(attachPointerEvents, sankey, callbacks.nodeEvents);
+        // disable dragging on sankey plot
+        // .call(attachDragHandler, sankeyLink, callbacks, gd); // has to be here as it binds sankeyLink
 
     sankeyNode
         .transition()
