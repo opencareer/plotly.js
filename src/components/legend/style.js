@@ -34,6 +34,7 @@ module.exports = function style(s, gd, legend) {
     if(!legend) legend = fullLayout.legend;
     var constantItemSizing = legend.itemsizing === 'constant';
     var itemWidth = legend.itemwidth;
+    var itemWidthCustom = itemWidth - 10;
     var centerPos = (itemWidth + constants.itemGap * 2) / 2;
     var centerTransform = strTranslate(centerPos, 0);
 
@@ -167,7 +168,7 @@ module.exports = function style(s, gd, legend) {
             .data(showFill || showGradientFill ? [d] : []);
         fill.enter().append('path').classed('js-fill', true);
         fill.exit().remove();
-        fill.attr('d', pathStart + 'h' + itemWidth + 'v6h-' + itemWidth + 'z')
+        fill.attr('d', pathStart + 'h' + itemWidthCustom + 'v6h-' + itemWidthCustom + 'z')
             .call(showFill ? Drawing.fillGroupStyle : fillGradient);
 
         if(showLine || showGradientLine) {
@@ -187,7 +188,7 @@ module.exports = function style(s, gd, legend) {
         // though there *is* no vertical variation in this case.
         // so add an invisibly small angle to the line
         // This issue (and workaround) exist across (Mac) Chrome, FF, and Safari
-        line.attr('d', pathStart + (showGradientLine ? 'l' + itemWidth + ',0.0001' : 'h' + itemWidth))
+        line.attr('d', pathStart + (showGradientLine ? 'l' + itemWidthCustom + ',0.0001' : 'h' + itemWidthCustom))
             .call(showLine ? Drawing.lineGroupStyle : lineGradient);
     }
 
